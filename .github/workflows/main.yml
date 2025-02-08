@@ -75,7 +75,7 @@ jobs:
           echo "nginx.yaml not found in the current directory"
           exit 1
         fi
-        sed -i "s|image: oviplokos/nginx-diplom:.*|image: ${{ env.IMAGE_NAME }}:${{ env.TAG }}|" /home/netology/kube-manifest/nginx.yaml 
+        sed -i "s|image: oviplokos/nginx-diplom:.*|image: ${{ env.IMAGE_NAME }}:${{ env.VERSION }}|" /home/netology/kube-manifest/nginx.yaml 
 
     - name: Apply Kubernetes manifests
       run: |
