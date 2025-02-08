@@ -71,12 +71,12 @@ jobs:
 
     - name: Replace image tag in nginx.yaml
       run: |
-        if [ ! -f ./nginx.yaml ]; then
+        if [ ! -f /home/netology/kube-manifest/nginx.yaml ]; then
           echo "nginx.yaml not found in the current directory"
           exit 1
         fi
-        sed -i "s|image: oviplokos/nginx-diplom:.*|image: ${{ env.IMAGE_TAG }}:${{ env.VERSION }}|" ./nginx.yaml 
+        sed -i "s|image: oviplokos/nginx-diplom:.*|image: ${{ env.IMAGE_TAG }}:${{ env.VERSION }}|" /home/netology/kube-manifest/nginx.yaml 
 
     - name: Apply Kubernetes manifests
       run: |
-        kubectl apply -f ./nginx.yaml
+        kubectl apply -f /home/netology/kube-manifest/nginx.yaml
