@@ -7,7 +7,7 @@ on:
     tags:
       - 'v*'
 env:
-  IMAGE_NAME: oviplokos/nginx-diplom.git
+  IMAGE_NAME: oviplokos/nginx-diplom
   NAMESPACE: nginx-diplom
   DEPLOYMENT_NAME: nginx-diplom
 
