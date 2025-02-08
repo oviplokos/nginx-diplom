@@ -46,6 +46,7 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/v')
     runs-on: self-hosted
     steps:
+
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Set tag to env
@@ -53,8 +54,17 @@ jobs:
            if [[ "${{ github.ref }}" == refs/tags/* ]]; then
             echo "TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
            fi 
+           - name: Replace image tag in deployment.yaml
+           run: |
+             if [ ! -f ./deploy/deployment.yaml ]; then
+               echo "deployment.yaml not found in the current directory"
+               exit 1
+             fi
+             sed -i "s|image: oviplokos/nginx-diplom:.*|image: ${{ env.IMAGE_NAME }}:${{ env.VERSION }}|" ./nginx.yaml
+ 
+  
       - name: Deploy to Kubernetes
        
         run: |
-          kubectl set image deployment/${{ env.DEPLOYMENT_NAME }} ${{ env.DEPLOYMENT_NAME }}=${{ env.IMAGE_NAME }}:${{ env.TAG }} -n ${{ env.NAMESPACE }}
+          kubectl set image oviplokos/${{ env.DEPLOYMENT_NAME }} ${{ env.DEPLOYMENT_NAME }}=${{ env.IMAGE_NAME }}:${{ env.TAG }} -n ${{ env.NAMESPACE }}
           kubectl rollout status deployment/${{ env.DEPLOYMENT_NAME }} -n ${{ env.NAMESPACE }}
