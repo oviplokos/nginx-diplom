@@ -79,4 +79,4 @@ jobs:
 
     - name: Apply Kubernetes manifests
       run: |
-        kubectl apply -f /home/netology/kube-manifest/nginx.yaml
+        kubectl apply -f /home/netology/kube-manifest/nginx.yaml -n nginx-diplom
